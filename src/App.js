@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import './App.css'
 import SearchBar from './components/SearchBar.jsx'
 import BookList from './components/BookList.jsx'
+import Cart from './components/Cart.jsx'
 
 class App extends Component {
 
-  state = { books: [] , cart:[], search:"", booksCopy:[]}
+  state = { books: [] , cart:[], search:"", booksCopy:[], total:[0]}
 
   async componentDidMount() {
     const response = await fetch('http://localhost:8082/api/books')
@@ -16,13 +17,12 @@ class App extends Component {
   onChange = (e) => {
     e.preventDefault()
     this.setState({...this.state,[e.target.name]: e.target.value})
-    console.log("this.state:", this.state);
+    // console.log("this.state:", this.state);
   }
 
   search = async (e) => {
     e.preventDefault()
-    console.log("hello", this.state.search)
-
+    // console.log("hello", this.state.search)
     let books = this.state.books.filter(book => {
     return book.title.includes(this.state.search) || book.author.includes(this.state.search)
   })
@@ -36,34 +36,33 @@ class App extends Component {
   }
 }
 
-
-  updateCart = async (id )=> {
-  const response = await fetch('http://localhost:8082/api/books/cart/add/:id',
-  {
-    method: 'PATCH',
-    body: JSON.stringify(id),
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
-  })
-
-const newCartItem = await response.json()
-
-this.setState({books:[...this.state.cart, newCartItem]})
+  updateCart =(bookTitle)=>{
+  let book = this.state.books.find(book=>book.title === bookTitle)
+    this.setState({cart:[...this.state.cart,book], total:[...this.state.total,book.price]})
+    // console.log(this.state.cart)
   }
+
 
   render() {
     return (
-      <div className="App">
-        <SearchBar
-        search= {this.search}
-        onChange = {this.onChange}
-        />
-        <BookList
-        title="Books"
-        books={this.state.books}
-        updateCart={this.state.updateCart}/>
+      <div class= "conatiner">
+
+          <div className="App">
+            <SearchBar
+            search= {this.search}
+            onChange = {this.onChange}
+            />
+            <br/>
+            <BookList
+            title="Books"
+            books={this.state.books}
+            updateCart={this.updateCart}/>
+            <br/>
+            <Cart
+            cart={this.state.cart}
+            total ={this.state.total}
+            />
+          </div>
       </div>
     )
   }

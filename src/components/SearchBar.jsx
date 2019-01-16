@@ -6,7 +6,8 @@ export default class SearchBar extends React.Component {
     return (
       <div>
       <nav className="navbar navbar-light bg-light">
-        <h1 className = "text-info">Books</h1>
+        <h1 className = "text-info">Welcome to Books Store</h1>
+        <p>search by title or author</p>
         <form onSubmit= {(e)=>this.props.search(e)} className="form-inline">
           <input name="search" onChange= {(e)=>
             this.props.onChange(e)} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
