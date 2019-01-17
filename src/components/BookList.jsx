@@ -11,12 +11,11 @@ export default class BookList extends React.Component {
 
   render() {
     return (
-
-              <div className="book-list">
-                  <ul className="list-group">
-                    {this.renderBooks()}
-                  </ul>
-              </div>
+      <div className="book-list">
+        <ul className="list-group">
+          {this.renderBooks()}
+        </ul>
+      </div>
     )
   }
 }

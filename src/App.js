@@ -26,7 +26,7 @@ class App extends Component {
     let books = this.state.books.filter(book => {
     return book.title.includes(this.state.search) || book.author.includes(this.state.search)
   })
-  console.log(books)
+  // console.log(books)
   if(this.state.search === ""){
     // const response = await fetch('http://localhost:8082/api/books')
     // const json = await response.json()
@@ -42,27 +42,25 @@ class App extends Component {
     // console.log(this.state.cart)
   }
 
-
   render() {
     return (
-      <div class= "conatiner">
-
-          <div className="App">
-            <SearchBar
-            search= {this.search}
-            onChange = {this.onChange}
-            />
-            <br/>
-            <BookList
+      <div class="conatiner">
+        <div className="App">
+          <SearchBar
+            search={this.search}
+            onChange={this.onChange}
+          />
+          <br/>
+          <BookList
             title="Books"
             books={this.state.books}
             updateCart={this.updateCart}/>
-            <br/>
-            <Cart
+          <br/>
+          <Cart
             cart={this.state.cart}
-            total ={this.state.total}
-            />
-          </div>
+            total={this.state.total}
+          />
+       </div>
       </div>
     )
   }
